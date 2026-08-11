@@ -2,7 +2,6 @@ package com.canoestudios.sofmenu.client;
 
 import com.canoestudios.sofmenu.SOFMenu;
 import com.canoestudios.sofmenu.client.gui.SofMainMenuScreen;
-import com.canoestudios.sofmenu.client.loading.LoadingScreenBackground;
 import com.canoestudios.sofmenu.client.loading.SofConnectingScreen;
 import com.canoestudios.sofmenu.client.loading.SofLevelLoadingScreen;
 import com.canoestudios.sofmenu.client.loading.SofLoadingOverlay;
@@ -22,6 +21,7 @@ import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
@@ -41,14 +41,14 @@ public final class ClientEventHandler {
 
     private static boolean windowCustomized;
 
-    private static final Field OVERLAY_FIELD = findField(Minecraft.class, "overlay");
+    private static final Field MINECRAFT_OVERLAY_FIELD = findField(Minecraft.class, "overlay");
     private static final Field LOADING_OVERLAY_RELOAD_FIELD = findField(LoadingOverlay.class, "reload");
     private static final Field LOADING_OVERLAY_ONFINISH_FIELD = findField(LoadingOverlay.class, "onFinish");
 
     private ClientEventHandler() {
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onScreenOpening(ScreenEvent.Opening event) {
         Screen screen = event.getScreen();
         Minecraft minecraft = Minecraft.getInstance();
@@ -100,7 +100,8 @@ public final class ClientEventHandler {
     /**
      * Replaces the vanilla {@link LoadingOverlay} with the SOF artwork. The
      * vanilla overlay is recreated by Minecraft on startup and on resource
-     * reloads, so this simply swaps any vanilla instance for our own.
+     * reloads, so this simply swaps any vanilla instance for our own while
+     * carrying over the underlying reload state so completion is detected.
      */
     private static void replaceLoadingOverlay(Minecraft minecraft) {
         Overlay overlay = getOverlay(minecraft);
@@ -112,12 +113,13 @@ public final class ClientEventHandler {
     }
 
     private static Overlay getOverlay(Minecraft minecraft) {
-        if (OVERLAY_FIELD == null) {
+        if (MINECRAFT_OVERLAY_FIELD == null) {
             return null;
         }
         try {
-            return (Overlay) OVERLAY_FIELD.get(minecraft);
-        } catch (IllegalAccessException | ClassCastException ignored) {
+            Object value = MINECRAFT_OVERLAY_FIELD.get(minecraft);
+            return value instanceof Overlay overlay ? overlay : null;
+        } catch (IllegalAccessException ignored) {
             return null;
         }
     }
@@ -139,7 +141,7 @@ public final class ClientEventHandler {
             return ObfuscationReflectionHelper.findField(clazz, officialName);
         } catch (Exception exception) {
             SOFMenu.LOGGER.warn("Unable to resolve field {}.{} - the related feature is disabled.",
-                    clazz.getSimpleName(), officialName, exception);
+                    clazz.getSimpleName(), officialName);
             return null;
         }
     }

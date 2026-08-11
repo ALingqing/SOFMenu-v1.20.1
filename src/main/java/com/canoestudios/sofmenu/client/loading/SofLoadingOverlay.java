@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.resources.ReloadInstance;
 
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 /**
@@ -23,11 +24,14 @@ public class SofLoadingOverlay extends Overlay {
     private static final long FADE_OUT_MILLIS = 1500L;
 
     private final Minecraft minecraft;
+    @Nullable
     private final ReloadInstance reload;
+    @Nullable
     private final Consumer<Void> onFinish;
     private long fadeOutStart = -1L;
 
-    public SofLoadingOverlay(Minecraft minecraft, ReloadInstance reload, Consumer<Void> onFinish) {
+    public SofLoadingOverlay(Minecraft minecraft, @Nullable ReloadInstance reload,
+            @Nullable Consumer<Void> onFinish) {
         this.minecraft = minecraft;
         this.reload = reload;
         this.onFinish = onFinish;
@@ -55,8 +59,8 @@ public class SofLoadingOverlay extends Overlay {
         int height = graphics.guiHeight();
         LoadingScreenBackground.render(graphics, width, height, -1);
 
-        String loadingText = LoadingScreenBackground.getAnimatedLoadingText();
-        graphics.drawCenteredString(this.minecraft.font, loadingText, width / 2, height / 2 - 12, 0xFFFFFF);
+        graphics.drawCenteredString(this.minecraft.font, LoadingScreenBackground.getAnimatedLoadingText(),
+                width / 2, height / 2 - 12, 0xFFFFFF);
         graphics.drawCenteredString(this.minecraft.font, Component.translatable("sofmenu.loading"),
                 width / 2, height / 2 + 4, 0xFFFFFF);
     }
