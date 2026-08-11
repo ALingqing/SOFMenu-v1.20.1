@@ -209,7 +209,8 @@ public class SofMainMenuScreen extends Screen {
             int height, float u, float v, float regionWidth, float regionHeight, float textureWidth,
             float textureHeight, float alpha) {
         graphics.setColor(1.0F, 1.0F, 1.0F, alpha);
-        graphics.blit(texture, x, y, u, v, width, height, (int) textureWidth, (int) textureHeight);
+        graphics.blit(texture, x, y, width, height, u, v, (int) regionWidth, (int) regionHeight,
+                (int) textureWidth, (int) textureHeight);
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
