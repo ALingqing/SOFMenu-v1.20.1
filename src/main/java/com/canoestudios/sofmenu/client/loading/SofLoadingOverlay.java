@@ -5,10 +5,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.resources.ReloadInstance;
+import net.minecraft.server.packs.resources.ResourceLoadStateTracker;
 
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
 
 /**
  * Replacement for the vanilla {@link net.minecraft.client.gui.screens.LoadingOverlay}
@@ -16,8 +15,8 @@ import java.util.function.Consumer;
  *
  * <p>The vanilla overlay is swapped for this one by
  * {@link com.canoestudios.sofmenu.client.ClientEventHandler} on the client
- * tick. Completion is detected through the shared {@link ReloadInstance} so the
- * overlay still fades out and is dismissed when the resource reload finishes.</p>
+ * tick. The shared {@link ResourceLoadStateTracker} is carried over so the
+ * overlay still dismisses itself once the resource reload finishes.</p>
  */
 public class SofLoadingOverlay extends Overlay {
 
@@ -25,31 +24,25 @@ public class SofLoadingOverlay extends Overlay {
 
     private final Minecraft minecraft;
     @Nullable
-    private final ReloadInstance reload;
-    @Nullable
-    private final Consumer<Void> onFinish;
+    private final ResourceLoadStateTracker reloadResult;
     private long fadeOutStart = -1L;
 
-    public SofLoadingOverlay(Minecraft minecraft, @Nullable ReloadInstance reload,
-            @Nullable Consumer<Void> onFinish) {
+    public SofLoadingOverlay(Minecraft minecraft, @Nullable ResourceLoadStateTracker reloadResult) {
         this.minecraft = minecraft;
-        this.reload = reload;
-        this.onFinish = onFinish;
+        this.reloadResult = reloadResult;
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         long now = Util.getMillis();
 
-        if (this.reload != null && this.reload.isDone() && this.fadeOutStart == -1L) {
+        if (this.reloadResult != null && this.reloadResult.getState() == ResourceLoadStateTracker.State.FINISHED
+                && this.fadeOutStart == -1L) {
             this.fadeOutStart = now;
         }
         if (this.fadeOutStart != -1L) {
             float fade = (float) (now - this.fadeOutStart) / (float) FADE_OUT_MILLIS;
             if (fade >= 1.0F) {
-                if (this.onFinish != null) {
-                    this.onFinish.accept(null);
-                }
                 this.minecraft.setOverlay(null);
                 return;
             }

@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.server.packs.resources.ReloadInstance;
+import net.minecraft.server.packs.resources.ResourceLoadStateTracker;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
@@ -27,7 +27,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;
-import java.util.function.Consumer;
 
 /**
  * Central event wiring for the client-side SOF Menu features.
@@ -42,8 +41,7 @@ public final class ClientEventHandler {
     private static boolean windowCustomized;
 
     private static final Field MINECRAFT_OVERLAY_FIELD = findField(Minecraft.class, "overlay");
-    private static final Field LOADING_OVERLAY_RELOAD_FIELD = findField(LoadingOverlay.class, "reload");
-    private static final Field LOADING_OVERLAY_ONFINISH_FIELD = findField(LoadingOverlay.class, "onFinish");
+    private static final Field LOADING_OVERLAY_RELOAD_FIELD = findField(LoadingOverlay.class, "reloadResult");
 
     private ClientEventHandler() {
     }
@@ -106,9 +104,9 @@ public final class ClientEventHandler {
     private static void replaceLoadingOverlay(Minecraft minecraft) {
         Overlay overlay = getOverlay(minecraft);
         if (overlay instanceof LoadingOverlay && !(overlay instanceof SofLoadingOverlay)) {
-            ReloadInstance reload = getFieldValue(LOADING_OVERLAY_RELOAD_FIELD, overlay, ReloadInstance.class);
-            Consumer<Void> onFinish = getFieldValue(LOADING_OVERLAY_ONFINISH_FIELD, overlay, Consumer.class);
-            minecraft.setOverlay(new SofLoadingOverlay(minecraft, reload, onFinish));
+            ResourceLoadStateTracker tracker = getFieldValue(LOADING_OVERLAY_RELOAD_FIELD, overlay,
+                    ResourceLoadStateTracker.class);
+            minecraft.setOverlay(new SofLoadingOverlay(minecraft, tracker));
         }
     }
 
