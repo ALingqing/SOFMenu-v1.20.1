@@ -51,7 +51,8 @@ public final class LastSessionStore {
 
         if (cachedServer) {
             ServerData serverData = new ServerData(cachedTarget, cachedTarget, false);
-            ConnectScreen.startConnecting(parent, minecraft, ServerAddress.parseString(cachedTarget), serverData);
+            ConnectScreen.startConnecting(parent, minecraft, ServerAddress.parseString(cachedTarget), serverData,
+                    false);
         } else {
             minecraft.setScreen(new SelectWorldScreen(parent));
         }
