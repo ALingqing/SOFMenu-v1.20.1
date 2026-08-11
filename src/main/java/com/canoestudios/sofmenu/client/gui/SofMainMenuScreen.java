@@ -4,7 +4,7 @@ import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.multiplayer.MultiplayerScreen;
+import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -133,7 +133,7 @@ public class SofMainMenuScreen extends Screen {
                 this.minecraft.setScreen(new SelectWorldScreen(this));
                 break;
             case BUTTON_MULTIPLAYER:
-                this.minecraft.setScreen(new MultiplayerScreen(this));
+                this.minecraft.setScreen(new JoinMultiplayerScreen(this));
                 break;
             case BUTTON_OPTIONS:
                 this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options));

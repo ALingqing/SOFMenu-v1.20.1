@@ -69,7 +69,7 @@ public class SofConnectingScreen extends SofWrappedScreen {
     private void cancel() {
         Connection connection = getConnection();
         if (connection != null) {
-            connection.close(Component.translatable("connect.aborted"));
+            connection.disconnect(Component.translatable("connect.aborted"));
         }
         this.minecraft.setScreen(getPreviousScreen());
     }

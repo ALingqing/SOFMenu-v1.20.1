@@ -40,8 +40,6 @@ public class SofInfoBookScreen extends Screen {
     private static final int BUTTON_WEBSITE = 2001;
     private static final int BUTTON_GITHUB = 2002;
     private static final int BUTTON_CREDITS = 2003;
-    private static final int CONFIRM_WEBSITE = 2101;
-    private static final int CONFIRM_GITHUB = 2102;
     private static final String WEBSITE_URL = "https://www.wecanoe.top/";
     private static final String GITHUB_URL = "https://github.com/CanoeStudioOfficial/dev_modpack";
 
@@ -81,10 +79,10 @@ public class SofInfoBookScreen extends Screen {
                 this.minecraft.setScreen(this.parent);
                 break;
             case BUTTON_WEBSITE:
-                openLinkConfirm(WEBSITE_URL, CONFIRM_WEBSITE);
+                openLinkConfirm(WEBSITE_URL);
                 break;
             case BUTTON_GITHUB:
-                openLinkConfirm(GITHUB_URL, CONFIRM_GITHUB);
+                openLinkConfirm(GITHUB_URL);
                 break;
             case BUTTON_CREDITS:
                 this.minecraft.setScreen(new SofCreditsScreen(this));
@@ -94,8 +92,8 @@ public class SofInfoBookScreen extends Screen {
         }
     }
 
-    private void openLinkConfirm(String url, int confirmId) {
-        ConfirmLinkScreen.confirmLink(this, url, confirmId, false);
+    private void openLinkConfirm(String url) {
+        ConfirmLinkScreen.confirmLink(url, this, false);
     }
 
     @Override
@@ -193,6 +191,7 @@ public class SofInfoBookScreen extends Screen {
 
     private static class InvisibleHoverButton extends Button {
 
+        private boolean sofHovered;
         private final String labelKey;
 
         InvisibleHoverButton(int x, int y, int width, int height, String labelKey, OnPress onPress) {
@@ -202,12 +201,12 @@ public class SofInfoBookScreen extends Screen {
 
         @Override
         protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-            this.hovered = mouseX >= this.getX() && mouseY >= this.getY()
+            this.sofHovered = mouseX >= this.getX() && mouseY >= this.getY()
                     && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
-            if (this.hovered) {
+            if (this.sofHovered) {
                 graphics.fill(this.getX() - 2, this.getY() - 2, this.getX() + this.width + 2,
                         this.getY() + this.height + 2, 0x46FFFFFF);
-                graphics.drawCenteredString(this.font, Component.translatable(this.labelKey),
+                graphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable(this.labelKey),
                         this.getX() + this.width / 2, this.getY() + this.height + 4, 0xFFFFFFFF);
             }
         }

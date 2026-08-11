@@ -20,6 +20,7 @@ public class TexturedMenuButton extends Button {
     private final long screenOpenedAt;
     private final float delaySeconds;
     private boolean wasHovered;
+    private boolean sofHovered;
     private Component hoverLabel;
 
     public TexturedMenuButton(int x, int y, int width, int height, Component message,
@@ -41,25 +42,25 @@ public class TexturedMenuButton extends Button {
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         float alpha = getAppearanceAlpha();
         this.active = alpha >= 1.0F;
-        this.hovered = mouseX >= this.getX() && mouseY >= this.getY()
+        this.sofHovered = mouseX >= this.getX() && mouseY >= this.getY()
                 && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
 
-        if (this.hovered && !this.wasHovered && alpha >= 1.0F) {
+        if (this.sofHovered && !this.wasHovered && alpha >= 1.0F) {
             Minecraft.getInstance().getSoundManager()
                     .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
         }
-        this.wasHovered = this.hovered;
+        this.wasHovered = this.sofHovered;
 
         graphics.setColor(1.0F, 1.0F, 1.0F, alpha);
-        graphics.blit(this.hovered ? this.hoverTexture : this.normalTexture,
+        graphics.blit(this.sofHovered ? this.hoverTexture : this.normalTexture,
                 this.getX(), this.getY(), 0, 0, this.width, this.height, this.width, this.height);
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        Component label = this.hovered && this.hoverLabel != null ? this.hoverLabel : this.getMessage();
+        Component label = this.sofHovered && this.hoverLabel != null ? this.hoverLabel : this.getMessage();
         if (label != null && !label.getString().isEmpty()) {
-            int color = this.hovered ? 0xFFFFA0 : 0xF2F2F2;
+            int color = this.sofHovered ? 0xFFFFA0 : 0xF2F2F2;
             int alphaBits = MathHelper.clamp((int) (alpha * 255.0F), 0, 255) << 24;
-            graphics.drawCenteredString(this.font, label, this.getX() + this.width / 2,
+            graphics.drawCenteredString(Minecraft.getInstance().font, label, this.getX() + this.width / 2,
                     this.getY() + (this.height - 8) / 2, alphaBits | color);
         }
     }
