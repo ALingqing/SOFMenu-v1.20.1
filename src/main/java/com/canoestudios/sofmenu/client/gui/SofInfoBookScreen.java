@@ -8,7 +8,8 @@ import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.MathHelper;
+
+import com.canoestudios.sofmenu.util.MathHelper;
 
 import java.awt.Desktop;
 import java.net.URI;

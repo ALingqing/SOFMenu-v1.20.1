@@ -7,7 +7,8 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.MathHelper;
+
+import com.canoestudios.sofmenu.util.MathHelper;
 
 /**
  * A button rendered entirely from a normal + hover texture, with a delayed

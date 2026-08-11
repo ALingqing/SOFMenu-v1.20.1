@@ -1,11 +1,19 @@
-package net.minecraft.util;
+package com.canoestudios.sofmenu.util;
+
+import net.minecraft.util.Mth;
 
 /**
  * Compatibility shim for the 1.12.2-era {@code MathHelper} name.
  *
  * <p>Minecraft 1.20.1 renamed this utility to {@link Mth}. This class keeps
- * the ported SOF Menu code (and any legacy call sites) compiling unchanged by
- * delegating the used helpers to {@link Mth}.</p>
+ * the ported SOF Menu code compiling unchanged by delegating the used helpers
+ * to {@link Mth}.</p>
+ *
+ * <p>Note: this lives in the mod's own package (not {@code net.minecraft.*})
+ * on purpose - placing classes in the {@code net.minecraft} package would make
+ * the mod and the game both export the same package, causing module resolution
+ * failures ("split package") in modpacks that use module layering (e.g. the
+ * Aether's nitrogen_internals via Sinytra Connector).</p>
  */
 @SuppressWarnings("unused")
 public final class MathHelper {

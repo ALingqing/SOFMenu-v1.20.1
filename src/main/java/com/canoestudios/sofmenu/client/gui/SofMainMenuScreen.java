@@ -8,7 +8,8 @@ import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.MathHelper;
+
+import com.canoestudios.sofmenu.util.MathHelper;
 
 import java.util.List;
 
