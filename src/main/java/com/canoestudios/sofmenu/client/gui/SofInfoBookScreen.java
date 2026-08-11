@@ -94,7 +94,7 @@ public class SofInfoBookScreen extends Screen {
     }
 
     private void openLinkConfirm(String url) {
-        ConfirmLinkScreen.confirmLink(this, url, 0, false);
+        ConfirmLinkScreen.confirmLink(url, this, false);
     }
 
     @Override
