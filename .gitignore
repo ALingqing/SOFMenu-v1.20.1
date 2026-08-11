@@ -1,0 +1,25 @@
+# gradle
+.gradle/
+build/
+out/
+classes/
+run/
+run-data/
+mcmodsrepo/
+
+# eclipse
+*.launch
+bin/
+.externalToolBuilders/
+.settings/
+
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# misc
+*.log
+crash-reports/
+logs/

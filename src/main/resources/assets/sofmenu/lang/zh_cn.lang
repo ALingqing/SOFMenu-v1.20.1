@@ -1,0 +1,30 @@
+
+sofmenu.loading=正在加载资源...
+dwm.fm.lls=继续游戏
+dwm.fm.mp= 单机游戏
+dwm.fm.sp= 多人游戏
+dwm.fm.mods= 模组列表
+dwm.fm.web=GitHub
+dwm.fm.website=官方网站
+dwm.fm.credits=开发人员名单
+dwm.fm.credits.active=开发人员名单
+dwm.fm.credits.former=曾开发人员名单
+dwm.fm.credits.active.lonelyxiya=lonelyxiya - 主要创始者，现任项目负责人。
+dwm.fm.credits.active.dreamsource=Dreamsource - 主要创始者，现任官方内容提供者。
+dwm.fm.credits.active.alingqing=ALingqing_ - 玩法建议与体验反馈提供者，早期测试先行者。
+dwm.fm.credits.active.lonelywjx=Lonelywjx - 服务器支持提供者。
+dwm.fm.credits.active.taiyangxina=taiyangxina - 早期测试先行者，也提供了许多来自高强度玩家视角的建议。
+dwm.fm.credits.active.origins_eternity=Origins_Eternity - 理智前传模组作者；感谢其移植理智前传，为 SOF 整合包带来更高挑战性。
+dwm.fm.credits.former.lonelyyunzer=LonelyYunZer - 曾参与 FTB 任务线编写。
+dwm.fm.credits.former.gezi_sama=gezi_sama - 曾为服务器赞助者，后因个人原因暂别游戏。
+dwm.fm.credits.former.tuijin=tuijin - 在整合包早期开发中提供玩法解答，后因现实生活安排暂不参与开发。
+dwm.fm.credits.former.ffei=FFei - 整合包早期测试先行者，后因个人兴趣变化暂不参与开发。
+dwm.fm.credits.former.mczph=mczph - Interactions 整合包作者；曾协助解答 MMCE 相关问题。虽然相关内容已在新版移除，仍在此致谢。
+dwm.fm.info.short=资料
+dwm.fm.info=资料书
+dwm.fm.lang.short=语言
+
+dwm.fm.quitgame.choose=你确定？
+dwm.fm.quitgame=退出游戏
+
+
